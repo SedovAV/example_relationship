@@ -15,13 +15,11 @@ class Users(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String)
     email = Column(String)
-    roles = relationship("Roles", secondary=user_roles, back_populates="users")
 
 class Roles(Base):
     __tablename__ = 'Roles'
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String)
-    users = relationship("Users", secondary=user_roles, back_populates="roles")
 
 engine = create_engine('sqlite:///:memory:')
 Base.metadata.create_all(engine)
