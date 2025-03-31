@@ -11,15 +11,13 @@ class Users(Base):
     name = Column(String)
     email = Column(String)
     role_id = Column(Integer, ForeignKey('Roles.id')) 
-    role = relationship("Roles", uselist=False, back_populates="user")
 
 class Roles(Base):
     __tablename__ = 'Roles'
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String)
-    user = relationship("Users", uselist=False, back_populates="role")
 
-engine = create_engine('sqlite:///one_to_one.db')
+engine = create_engine('sqlite:///:memory:')
 Base.metadata.create_all(engine)
 
 graph = create_schema_graph(
