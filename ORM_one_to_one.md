@@ -1,3 +1,11 @@
+## Пример построения ER-диаграммы на примере связи сущностей 1:1
+#### Импорт необходимых библиотек:
+```cmd
+python3 -m pip install sqlalchemy sqlalchemy_schemadisplay graphviz
+```
+
+
+```python
 from sqlalchemy import create_engine, Column, Integer, String, ForeignKey
 from sqlalchemy.orm import declarative_base, relationship
 from sqlalchemy_schemadisplay import create_schema_graph
@@ -20,7 +28,7 @@ class Roles(Base):
     user_id = Column(Integer, ForeignKey('Users.id'))
     user = relationship("Users", uselist=False, back_populates="role")
 
-engine = create_engine('sqlite:///one_to_one.db')
+engine = create_engine('sqlite:///:memory:')
 Base.metadata.create_all(engine)
 
 graph = create_schema_graph(
@@ -35,3 +43,7 @@ graph = create_schema_graph(
 )
 
 graph.write_png('ORM_one_to_one.png')
+```
+
+#### Результат:
+![Изображение](https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Markdown-mark.svg/1920px-Markdown-mark.svg.png "Логотип Markdown")
