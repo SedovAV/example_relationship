@@ -18,15 +18,15 @@ class Users(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String)
     email = Column(String)
-    role_id = Column(Integer, ForeignKey('Roles.id')) 
-    role = relationship("Roles", uselist=False, back_populates="user")
+    role_id = Column(Integer, ForeignKey('Roles.id', ondelete='CASCADE'), unique=True) 
+    role = relationship("Roles", back_populates="user")
 
 class Roles(Base):
     __tablename__ = 'Roles'
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String)
-    user_id = Column(Integer, ForeignKey('Users.id'))
-    user = relationship("Users", uselist=False, back_populates="role")
+    role = relationship("Users", uselist=False, back_populates="role")
+
 
 engine = create_engine('sqlite:///:memory:')
 Base.metadata.create_all(engine)
@@ -42,8 +42,8 @@ graph = create_schema_graph(
     engine=engine
 )
 
-graph.write_png('ORM_one_to_one.png')
+graph.write_png('img/ORM_test_1_1.png')
 ```
 
 #### Результат:
-![Изображение](https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Markdown-mark.svg/1920px-Markdown-mark.svg.png "Логотип Markdown")
+<img src="ORM_test_1_1.png" height="400">
